@@ -3,8 +3,7 @@
     /signup - user signup
     /homepage - user homepage
     /homepage/product/:id - product details page
-    /map - products on map
-    /farmer/:id - farmer profile
+    /map - sellers on map
     /profile/:id - user profile
 2. /farmer
     /login - farmer login
