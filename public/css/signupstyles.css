@@ -1,0 +1,14 @@
+.title {
+    font-size: 2em;
+    text-align: center;
+}
+
+.title-small {
+    font-size: 0.7em;
+}
+
+.note {
+    font-size: small;
+    text-align: center;
+    padding: .5em 0;
+}

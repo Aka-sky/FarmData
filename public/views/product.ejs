@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/signupstyles.css">
+    <link rel="stylesheet" href="/css/productstyles.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <title>FarmerData | Product | Add</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <%= typeof msg != 'undefined' ? msg : "" %>
+        <% if (typeof(product) != 'undefined') { %>
+            <div class="card">
+                <div class="grid grid-2">
+                    <div class="grid-item">
+                        <img src="<%= product.productImageURL %>" alt="product Image">
+                        <h3><%= product.name %></h3>
+                        <p><%= product.description %></p>
+                        <p>Condition - <%= product.condition %></p>
+                        <p><%= product.category %></p>
+                        <h5>&#8377;<%= product.price %> per <%= product.unit %></h5>
+                        <button type="button" class="btn btn-deafult"><a href="/product/request/<%= product_id %>">Make Request</a></button>
+                    </div>
+                    <div class="grid-item">
+                        <h3>Seller</h3>
+                        <h5><%= seller.name %></h5>
+                        <a href="/user/<%= seller.username %>"><%= seller.username %></a>
+                        <div id='map' style='min-width: 400px; height:400px'></div>
+                    </div>
+                </div>
+            </div>
+            <% } %>    
+    </div>
+
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <script>
+        
+        // TO MAKE THE MAP APPEAR YOU MUST
+        // ADD YOUR ACCESS TOKEN FROM
+        // https://account.mapbox.com
+        let lat = "<%= seller.latitude  %>"
+        let lng = "<%= seller.longitude  %>"
+        mapboxgl.accessToken = '<%= accessToken %>';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+            center: [lng,lat], // starting position [lng, lat]
+            zoom: 7 // starting zoom
+            });
+
+            const marker = new mapboxgl.Marker()
+                .setLngLat(map.getCenter())
+                .addTo(map);
+    </script>
+</body>
+</html>

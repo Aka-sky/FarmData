@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/signupstyles.css">
+    <title>FarmerData | Product | Add</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <div class="card">
+            <div class="title">
+                Add Product
+            </div>
+            <%= typeof msg != 'undefined' ? msg : "" %>
+            <form  method="POST" class="form">
+
+                <label for="category"
+                >Choose Category</label
+              >
+                <select
+                  class="form-control"
+                  name="category"
+                  id="category"
+                >
+
+                  <option value="grains">Grains</option>
+                  <option value="fruits">Fruits</option>
+                  <option value="vegetables">Vegetables</option>
+                  <option value="herbs and spices">Herbs and Spices</option>
+                  <option value="seeds">Seeds</option>
+                  <option value="nuts">Nuts</option>
+                </select>
+
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="<%= typeof name != 'undefined' ? name : "" %>" required autofocus>
+                <!-- <label for="name">Name</label> -->
+                <input type="text" id="description" name="description" class="form-control" placeholder="Description" value="<%= typeof description != 'undefined' ? description : "" %>" required autofocus>
+                <!-- <label for="description">Description</label> -->
+                <input type="text" id="condition" name="condition" class="form-control" placeholder="Condition" value="<%= typeof condition != 'undefined' ? condition : "" %>" required autofocus>
+                <!-- <label for="condition">Condition</label> -->
+
+
+                <label for="unit"
+                >Choose Unit</label
+              >
+                <select
+                  class="form-control"
+                  name="unit"
+                  id="unit"
+                >
+
+                  <option value="kilogram">Per Kg</option>
+                  <option value="ton">Per Ton OR Per 1000kg</option>
+                  <option value="unit">Per Unit</option>
+                </select>
+                
+                <input type="file" id="productImageURL" name="productImageURL" class="form-control" placeholder="Product Image" value="<%= typeof productImageURL != 'undefined' ? productImageURL : "" %>">
+                
+                <input type="number" id="price" name="price" class="form-control" placeholder="Price" value="<%= typeof price != 'undefined' ? price : "" %>">
+
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>

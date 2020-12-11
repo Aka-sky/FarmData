@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/homepagestyles.css">
+    <title>FarmerData | Homepage</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <h3 style="margin: 1em 0;">Products</h3>
+        <%= typeof(msg) != "undefined" ? msg : "" %>
+        <div class="grid">
+
+            <% if(typeof(products) != 'undefined') { %>
+                <% if(products.length == 0) { %>
+                    <h4>No products.</h4>
+                <% } else {%>
+                    <% products.forEach(product => { %>
+                        <a href="/product/<%= product.product_id %>">
+                        <div class="grid-item">
+                            <div class="productCardImage">
+                                <img src="<%= product.productImageURL %>" alt="Product Image">
+                            </div>
+                            <div class="productCardDetails">
+                                <div class="cardDetails">
+                                    <h5 class="productName"><%= product.name %></h5>
+                                    <p class="productDescription small"><%= product.category %></p>
+                                    <h5 class="productprice">&#8377;<%= product.price %></h5>
+                                </div>
+                            </div>
+                        </div>
+                        </a>            
+                    <% }); %>
+                <% } %>
+            <% } else { %>
+                <h4>No products.</h4>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

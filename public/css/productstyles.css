@@ -1,0 +1,28 @@
+
+.card {
+    max-width: 100%;
+}
+
+.grid {
+    display: grid;
+    gap: 1em;
+    grid-template-columns: 1fr 1fr;
+
+}
+
+.grid a {
+    display: block;
+    color: var(--color3);
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid-item img {
+    max-width: 50%;
+}

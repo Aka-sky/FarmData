@@ -1,0 +1,31 @@
+<div class="navbar">
+    <div class="container nav">
+        <div class="left-side">
+            <div class="brand">
+                <a href="/">FarmerData</a>
+            </div>
+            <% if(typeof user != 'undefined') { %>
+            <ul class="links">
+                <li class="link"><a href="/homepage">Homepage</a></li>
+                <li class="link"><a href="/map">Map</a></li>
+                <% if(user.labels.includes('Farmer')) { %>
+                    <li class="link" ><a href="/product/add">Add Product</a></li>
+                <% } else { %>
+                    <li class="link" ><a href="/product/requests">Requests</a></li>
+                <% } %>
+            </ul>
+            <% } %>
+        </div>
+        <div class="right-side">
+                <ul class="links">
+                    <% if(typeof user != 'undefined') { %>
+                        <li class="link"><a href="/user/<%= user.username %>">Hi, <%= user.username %></a></li>
+                        <li class="link"><a href="/logout">Logout</a></li>
+                    <% } else { %>
+                        <li class="link"><a href="/user/login">Login</a></li>
+                        <li class="link"><a href="/user/signup">SignUp</a></li>
+                    <% } %>
+                </ul>
+        </div>
+    </div>
+</div>

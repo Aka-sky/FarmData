@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/signupstyles.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <title>FarmerData | Signup </title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <div class="card">
+            <div class="title">
+                SignUp
+            </div>
+            <%= typeof msg != 'undefined' ? msg : "" %>
+            <form  method="POST" class="form">
+
+                <label for="userType"
+                >Choose Category</label
+              >
+                <select
+                  class="form-control"
+                  name="userType"
+                  id="userType"
+                >
+                  <option value="farmer">Farmer</option>
+                  <option value="buyer">Buyer</option>
+                </select>
+
+                <input type="text" id="name" name="name" class="form-control" placeholder="name" value="<%= typeof name != 'undefined' ? name : "" %>" required autofocus>
+                <!-- <label for="username">Username</label> -->
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" value="<%= typeof username != 'undefined' ? username : "" %>" required autofocus>
+                <!-- <label for="username">Username</label> -->
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" value="<%= typeof password != 'undefined' ? password : "" %>" required autofocus>
+                <!-- <label for="password">Password</label> -->
+                <input type="text" id="email" name="email" class="form-control" placeholder="Email" value="<%= typeof email != 'undefined' ? email : "" %>" required autofocus>
+                <!-- <label for="email">Email</label> -->
+                <input type="number" id="phone" name="phone" class="form-control" placeholder="Phone Number" value="<%= typeof phone != 'undefined' ? phone : "" %>" required autofocus>
+                <!-- <label for="phone">Phone Number</label> -->
+<!-- 
+                <p class="note">
+                    *Place the marker on your location and click Get Address Button
+                </p> -->
+
+                <!-- <div id='map' style='width: 400px; height: 300px;'></div> -->
+
+                <!-- <button type="button" class="btn btn-default" onclick="getAddress()">Get Address</button>
+
+                <p id="loading" style="text-align: center; font-size: smaller; display: none;">Loading...</p>
+                <p id="error" style="text-align: center; font-size: smaller; color: red; display: none;">An error occured! Please try again.</p> -->
+
+                <!-- <input type="text" disabled id="address" name="address" class="form-control" placeholder="Address" value="<%= typeof address != 'undefined' ? address : "" %>"> -->
+                <!-- <label for="address">Address</label> -->
+                <!-- <input type="text" disabled id="city" name="city" class="form-control" placeholder="City" value="<%= typeof city != 'undefined' ? city : "" %>"> -->
+                <!-- <label for="city">City</label> -->
+                <!-- <input type="text" disabled id="state" name="state" class="form-control" placeholder="State" value="<%= typeof state != 'undefined' ? state : "" %>"> -->
+                <!-- <label for="state">State</label> -->
+                <input type="number" step="0.00001" id="latitude" name="latitude" class="form-control" placeholder="Latitude" value="<%= typeof latitude != 'undefined' ? latitude : "" %>">
+                <!-- <label for="latitude">Latitude</label> -->
+                <input type="number" step="0.00001" id="longitude" name="longitude" class="form-control" placeholder="Longitude" value="<%= typeof longitude != 'undefined' ? longitude : "" %>">
+                <!-- <label for="longitude">Longitude</label> -->
+<!-- 
+                <p id="longitude" style="text-align: center; margin: 0.5em 0em;">Longitude: </p>
+                <p id="latitude" style="text-align: center; margin: 0.5em 0em;">Latitude: </p> -->
+
+                <input type="file" id="profileImageURL" name="profileImageURL" class="form-control" placeholder="Profile Image" value="<%= typeof profileImageURL != 'undefined' ? profileImageURL : "" %>">
+
+
+
+                    <!-- <label for="profileImageURL">Profile Image</label> -->
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+        </div>
+    </div>
+
+
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <script>
+                
+        // TO MAKE THE MAP APPEAR YOU MUST
+        // ADD YOUR ACCESS TOKEN FROM
+        // https://account.mapbox.com
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGVtcG8wNzMwIiwiYSI6ImNrZ3YwcnAwMDBnM3gycXJ5ZzBtZTVud2MifQ.POS0LhybscMGqCOutiVaiA';
+        const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+        center: [73, 19], // starting position [lng, lat]
+        zoom: 6 // starting zoom
+        });
+
+        const marker = new mapboxgl.Marker({
+            draggable: true
+        })
+            .setLngLat(map.getCenter())
+            .addTo(map);
+
+        marker.on('dragend', onDragEnd);
+
+        function onDragEnd() {
+            let lngLat = marker.getLngLat();
+            console.log('Longitude: ' + lngLat.lng + ' Latitude: ' + lngLat.lat);
+
+            // move map to where the marker is dragged 
+            map.flyTo({
+                center: [
+                    lngLat.lng,
+                    lngLat.lat
+                ],
+                essential: false // this animation is considered essential with respect to prefers-reduced-motion
+            });
+
+            document.getElementById('latitude').innerHTML = `Latitude: ${lngLat.lat.toFixed(2)}`;
+            document.getElementById('longitude').innerHTML = `Longitude: ${lngLat.lng.toFixed(2)}`;
+        }
+
+        // function getAddress() {
+
+        //     // e.preventDefault();
+        //     console.log('Called get Address')
+        //     document.getElementById('loading').setAttribute('display','block');
+        //     let lngLat = marker.getLngLat();
+        //     console.log('Calling fetch..')
+        //     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${lngLat.lng},${lngLat.lat}.json`,{
+        //         method: 'GET',
+        //     })
+        //     .then(result => {
+        //         document.getElementById('error').setAttribute('display','none');
+        //         console.log(result.body)
+        //         // const location = result.results[0].locations[0];   
+        //         // console.log(location);
+        //         // document.getElementById('address').value = `${location.street} ${location.adminArea6} ${location.adminArea5} ${location.adminArea4} ${location.adminArea3}`;
+        //         // document.getElementById('city').value = location.adminArea4;
+        //         // document.getElementById('state').value = location.adminArea3;
+        //         // document.getElementById('latitude').value = location.latLng.lat;
+        //         // document.getElementById('longitude').value = location.latLng.lng;
+        //         // document.getElementById('loading').setAttribute('display','none');
+
+        //         console.log('Fetch done.....')
+        //     })
+        //     .catch((error) => {
+        //         console.log(error.message)
+        //         document.getElementById('error').setAttribute('display','block');
+        //     })
+        // }
+
+
+    </script>
+</body>
+</html>
