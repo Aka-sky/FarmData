@@ -79,44 +79,44 @@
 
 
 
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-    <script>
+    <!-- <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script> -->
+    <!-- <script> -->
                 
-        // TO MAKE THE MAP APPEAR YOU MUST
+        <!-- // TO MAKE THE MAP APPEAR YOU MUST
         // ADD YOUR ACCESS TOKEN FROM
         // https://account.mapbox.com
-        mapboxgl.accessToken = 'pk.eyJ1IjoidGVtcG8wNzMwIiwiYSI6ImNrZ3YwcnAwMDBnM3gycXJ5ZzBtZTVud2MifQ.POS0LhybscMGqCOutiVaiA';
-        const map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
-        center: [73, 19], // starting position [lng, lat]
-        zoom: 6 // starting zoom
-        });
+        // mapboxgl.accessToken = '<%= accessToken %>';
+        // const map = new mapboxgl.Map({
+        // container: 'map',
+        // style: 'mapbox://styles/mapbox/streets-v11', // stylesheet location
+        // center: [73, 19], // starting position [lng, lat]
+        // zoom: 6 // starting zoom
+        // });
 
-        const marker = new mapboxgl.Marker({
-            draggable: true
-        })
-            .setLngLat(map.getCenter())
-            .addTo(map);
+        // const marker = new mapboxgl.Marker({
+        //     draggable: true
+        // })
+        //     .setLngLat(map.getCenter())
+        //     .addTo(map);
 
-        marker.on('dragend', onDragEnd);
+        // marker.on('dragend', onDragEnd);
 
-        function onDragEnd() {
-            let lngLat = marker.getLngLat();
-            console.log('Longitude: ' + lngLat.lng + ' Latitude: ' + lngLat.lat);
+        // function onDragEnd() {
+        //     let lngLat = marker.getLngLat();
+        //     console.log('Longitude: ' + lngLat.lng + ' Latitude: ' + lngLat.lat);
 
-            // move map to where the marker is dragged 
-            map.flyTo({
-                center: [
-                    lngLat.lng,
-                    lngLat.lat
-                ],
-                essential: false // this animation is considered essential with respect to prefers-reduced-motion
-            });
+        //     // move map to where the marker is dragged 
+        //     map.flyTo({
+        //         center: [
+        //             lngLat.lng,
+        //             lngLat.lat
+        //         ],
+        //         essential: false // this animation is considered essential with respect to prefers-reduced-motion
+        //     });
 
-            document.getElementById('latitude').innerHTML = `Latitude: ${lngLat.lat.toFixed(2)}`;
-            document.getElementById('longitude').innerHTML = `Longitude: ${lngLat.lng.toFixed(2)}`;
-        }
+        //     document.getElementById('latitude').innerHTML = `Latitude: ${lngLat.lat.toFixed(2)}`;
+        //     document.getElementById('longitude').innerHTML = `Longitude: ${lngLat.lng.toFixed(2)}`;
+        // }
 
         // function getAddress() {
 
@@ -146,9 +146,9 @@
         //         console.log(error.message)
         //         document.getElementById('error').setAttribute('display','block');
         //     })
-        // }
+        // } -->
 
 
-    </script>
+    <!-- </script> -->
 </body>
 </html>
