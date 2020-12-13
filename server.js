@@ -38,21 +38,20 @@ app.use("/", require("./routes/index"));
 const PORT = process.env.PORT || 3000 
 app.listen(PORT, () => {
 
-  // bcrypt.hash('pass123',10,(err,password) => {
-  //   console.log(password);
-  // }) 
-
-  // seedDBfarmersProducts();
-  //   seedDBuyers();
-
-    // console.log(faker.address.latitude())
+/**
+ * To seed Database uncomment this lines and run once and again comment this lines 
+ seedDBfarmersProducts();
+ seedDBuyers();
+ * 
+ */
 
     console.log(`Application started on ${PORT} in ${process.env.NODE_ENV} mode.`)
 })
 
+// Seed functions --------------------------------------------------------------------------
 const seedDBfarmersProducts = () => {
 
-  let category = ['friuts','seeds','grains','vegetables','herbs and spices','nuts'];
+  let category = ['fruits','seeds','grains','vegetables','herbs and spices','nuts'];
 
   let productNames = [
     ['Apples','Bananas','Oranges','Guava','Papaya','Water Melons','Lichi'],
@@ -146,3 +145,5 @@ const seedDBuyers = () => {
         })
   }
 }
+
+// Seed functions --------------------------------------------------------------------------

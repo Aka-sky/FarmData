@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/homepagestyles.css">
+    <title>FarmerData | Requests</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container">
+        <h3 style="margin: 1em 0;">Requests</h3>
+        <%= typeof(msg) != "undefined" ? msg : "" %>
+        <div class="grid">
+            <% requests.forEach(request => { %>
+                <p><%= request.username %></p>
+                <p><%= request.quantity %></p>
+                <p><%= request %></p>
+                <p><%=  %></p>
+                <p><%=  %></p>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>

@@ -26,3 +26,38 @@
 .grid-item img {
     max-width: 50%;
 }
+
+.span-2 {
+    justify-content: flex-start;
+    align-items: flex-start;
+    grid-column: 1 / 3;
+}
+
+.span-2 form{
+    width: 100%;
+}
+
+.span-2 input#body {
+    display: block;
+    width: 100%;
+}
+
+.rating{
+    display: block;
+    margin: 0.5em 0;
+}
+
+.added-comments {
+    width: 100%;
+    text-align: left;
+}
+
+.comment {
+    margin: 0.5em 0;
+}
+
+.comment a {
+    display: block;
+    margin-bottom: 0.3em;
+    color: var(--color2);
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/css/styles.css">
+		<link rel="stylesheet" href="/css/profilestyles.css">
+		<title>FarmerData | Profile </title>
+	</head>
+	<body>
+		<%- include('partials/navbar') %>
+		<div class="container">
+			<div class="card-h">
+                <div class="left-side">
+                    <img src="<%= profile.profileImageURL %>" alt="Profile Image">
+                </div>
+                <div class="right-side">
+                    <div class="">
+                        <p style="color: var(--color2);"><%= profile.username %></p>
+                    </div>
+                    <div class="">
+                        <p><%= profile.name %></p>
+                    </div>
+                    <div class="">
+                        <p><%= profile.phone %></p>
+                    </div>
+                    <div class="">
+                        <p><%= profile.email %></p>
+                    </div>
+                    <div class="">
+                        <p>Rating stars will be added later!</p>
+                    </div>
+                </div>
+            </div>
+		</div>
+	</body>
+</html>

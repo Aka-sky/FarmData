@@ -17,4 +17,9 @@ router.post("/add", product.addProduct);
 // @access  Private(registered only) 
 router.get("/:id", product.displayProduct);
 
+// @desc    Comment on a product with rating
+// @route   @POST /product/:id 
+// @access  Private(registered Buyer's only) 
+router.post("/:id", product.addComment);
+
 module.exports = router;

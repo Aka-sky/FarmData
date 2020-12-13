@@ -63,3 +63,28 @@ module.exports.addUser = async(user,password) => {
     }
 }
 
+module.exports.getUserByUsername = async(username) => {
+
+    const session = driver.session();
+
+    const query = 'MATCH (user:User{username: $username}) RETURN user.name AS name, user.username AS username, user.phone AS phone, user.email AS email, user.latitude AS latitude, user.longitude AS longitude, user.profileImageURL AS profileImageURL'
+    try {
+        
+        const result = await session.run(query,{
+            username
+        }) 
+
+        if(result.records[0].length > 0) {
+            return result.records[0].toObject();
+        }
+
+        return 0;
+
+    } catch (error) {
+        console.log(error.message)
+        return undefined
+    } finally {
+        await session.close();
+    }
+
+}

@@ -4,9 +4,9 @@ const express = require('express');
 const driver = require('../config/db');
 
 module.exports.addProduct = async(user, product) => {
-
+    
     const session = driver.session();
-
+    
     const query = 'MATCH (farmer: Farmer{username: $username}) CREATE (product: Product {name: $name, description: $description, condition: $condition, category: $category, unit: $unit, price: $price, productImageURL: $productImageURL}) <- [:ADDED {created_at: DATETIME()}] - (farmer) RETURN product.name AS product, farmer.username AS farmer';
 
     try {
@@ -97,3 +97,56 @@ module.exports.getSeller = async(product_id) => {
         await session.close();
     }
 }
+
+module.exports.getCommentsForProduct = async(product_id) => {
+
+    const session = driver.session();
+
+    const query = `MATCH (b:Buyer)-[com:COMMENTED]-(p:Product) WHERE ID(p) = ${product_id} RETURN b.username AS username, com.body AS body, com.rating AS rating, com.created_at AS created_at ORDER BY created_at DESC`
+
+    try {
+        const result = await session.run(query);
+
+        if(result.records.length > 0) {
+            const allCom = [];
+            result.records.forEach(record => allCom.push(record.toObject()))
+            return allCom
+        } else {
+            return undefined;
+        }
+    } catch (error) {
+        console.log(error.message);
+        return undefined;
+    } finally {
+        await session.close()
+    }
+}
+
+module.exports.addComment = async(comment, product_id, username) => {
+
+    const session = driver.session();
+
+    const query = `MATCH (prod: Product), (user: Buyer) WHERE ID(prod) = ${product_id} AND user.username = $username CREATE (user)-[com:COMMENTED {body: $body, rating: ${comment.rating}, created_at: DATETIME()}]->(prod) RETURN com;`
+    
+    try {
+        const result = await session.run(query, {
+            product_id,
+            username,
+            body: comment.body,
+        })
+        
+        if(result.records.length > 0) {
+            // console.log(result.records[0].toObject())
+            return result.records[0].toObject()
+        } else {
+            // console.log(result.records[0].toObject())
+            return 0;
+        }
+    } catch (error) {
+        console.log(error.message)
+        return undefined
+    } finally {
+        await session.close()
+    }
+}
+

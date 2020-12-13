@@ -74,21 +74,42 @@ module.exports.displayProduct = (req,res) => {
                                 user: sess.user
                             })
                         } else {
-                            res.render('product',{
-                                user: sess.user,
-                                product: result,
-                                seller,
-                                product_id,
-                                accessToken: process.env.MAPBOX_API_KEY
-                            })
+                            productResolver.getCommentsForProduct(product_id)
+                                .then(comments => {
+                                    res.render('product',{
+                                        msg: (req.message != undefined ? req.message : ""),
+                                        user: sess.user,
+                                        product: result,
+                                        seller,
+                                        product_id,
+                                        comments: comments,
+                                        accessToken: process.env.MAPBOX_API_KEY
+                                    })
+                                })
                         }
                     })
             }
         })
-
-
     } else {
         sess.redirectURL = `/product/${product_id}`;
         res.redirect('/user/login');
     }
+}
+
+module.exports.addComment = (req,res) => {
+
+    const sess = req.session;
+    const product_id = req.params.id;
+    const comment = req.body;
+    // console.log(comment)
+    productResolver.addComment(comment, product_id, sess.user.username)
+        .then(result => {
+            if(result == undefined || !result) {
+                sess.message = "Comment couldn't be added.";
+                res.redirect(`/product/${product_id}`);
+            } else {
+                // console.log(result)
+                res.redirect(`/product/${product_id}`);
+            }
+        })
 }

@@ -1,0 +1,34 @@
+.card-h{
+    width: 100%;
+    margin: 1em auto ;
+    background: #fff;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: row;
+    padding: 0em;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.card-h .left-side, .card-h .right-side {
+    padding: 1em;
+    width: 100%;
+    /* height: 100%; */
+}
+
+.card-h .left-side img{
+    display: block;
+    min-width: 60%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.card-h .right-side {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    height: 100%;
+    gap: 1em;
+    justify-content: space-around;
+}

@@ -27,6 +27,11 @@ router.get("/signup", userController.signup);
 // @access  Public(non registered)
 router.post("/signup", userController.create);
 
+// @desc    Display user profile page
+// @route   @POST /user/:username
+// @access  Private(only registered)
+router.get("/:username", userController.view);
+
 
 module.exports = router;
 

@@ -168,80 +168,25 @@ module.exports.create = (req,res) => {
         })
 }
 
-
-// POST user/signup
-// module.exports.create = async(req,res) => {
-//     const sess = req.session;
-//     const user = req.body;
-//     const session = driver.session();
-//     // query definition
-//     const query = 'MATCH (n: User{username: $username}) RETURN n.username AS username'
-
-//     try {
-//         // const result = await session.run(query,{username: user.username})
-
-//         const result = resolver.getUser(user.username);
-        
-//         if(result.length > 0) {
-//             throw "Username already in use!"
-//         } else {
-//             bcrypt.hash(user.password, saltRounds, async(err, hash) => {
-//                 if (err) {
-//                     throw "Server Error! Try again later."
-//                 } else {
-//                     let addQuery;
-//                     if(user.userType == "farmer") {
-//                         addQuery = "CREATE (n: User:Farmer{username: $username, email: $email, name: $name, password: $password, phone: $phone, profileImageURL: $profileImageURL, latitude: $latitude, longitude: $longitude} RETURN n.username AS username )"
-//                     } else {
-//                         addQuery = "CREATE (n: User:Buyer{username: $username, email: $email, name: $name, password: $password, phone: $phone, profileImageURL: $profileImageURL, latitude: $latitude, longitude: $longitude} RETURN n.username AS username )"
-//                     }
-
-
-
-//                     const addResult = await session.run(addQuery, {
-//                         name: user.name,
-//                         username: user.username,
-//                         email: user.email,
-//                         password: hash,
-//                         phone: user.phone,
-//                         profileImageURL: user.profileImageURL,
-//                         latitude: user.latitude,
-//                         longitude: user.longitude
-//                     })
-
-//                     if(result.records.length > 0) {
-//                         const data = result.records[0].toObject()
-//                         sess.user = {
-//                             username: data.username,
-//                             labels: data.labels
-//                         }
-//                         if(sess.redirectURL) {
-//                             let url = sess.redirectURL
-//                             delete sess.redirectURL
-//                             res.redirect(url)
-//                         } else {
-//                             res.redirect("/homepage")
-//                         }
-//                     } else {
-//                         throw "Server Error! Try again later."
-//                     }
-//                 }
-//             })
-//         }
-//     } catch (error) {
-//         res.render('signup',{
-//             msg: error.message,
-//             name: user.name,
-//             username: user.username,
-//             email: user.email,
-//             password: user.password,
-//             phone: user.phone,
-//             profileImageURL: user.profileImageURL,
-//             latitude: user.latitude,
-//             longitude: user.longitude
-//         })
-//         console.log(error.message)
-//     } finally {
-//         await session.close()
-//     }
-// }
+// Get user profile page
+module.exports.view = (req,res) => {
+    const sess = req.session;
+    const username = req.params.username
+    if(sess.user) {
+        resolver.getUserByUsername(username)
+            .then(result => {
+                if(result == undefined || !result) {
+                    // Display error page 404
+                    res.send("404 page not found")
+                } else {
+                    res.render('profile',{
+                        user: sess.user,
+                        profile: result
+                    })
+                }
+            })
+    } else {
+        sess.redirectURL = `/user/${username}`;
+        res.redirect('/user/login')
+    }
+}
