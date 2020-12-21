@@ -44,7 +44,6 @@ app.listen(PORT, () => {
  seedDBuyers();
  * 
  */
-
     console.log(`Application started on ${PORT} in ${process.env.NODE_ENV} mode.`)
 })
 

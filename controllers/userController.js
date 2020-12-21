@@ -45,7 +45,11 @@ module.exports.createSession = (req,res) => {
                     } else if (match) {
                         sess.user = {
                             username: user.username,
-                            labels: result.labels
+                            labels: result.labels,
+                            location: {
+                                lat: result.latitude,
+                                lng: result.longitude
+                            }
                         }
         
                         if(sess.redirectURL) {
@@ -150,7 +154,11 @@ module.exports.create = (req,res) => {
                                 } else {
                                     sess.user = {
                                         username: user.username,
-                                        labels: result.labels
+                                        labels: result.labels,
+                                        location: {
+                                            lat: user.latitude,
+                                            lng: user.longitude
+                                        }
                                     }
                     
                                     if(sess.redirectURL) {

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/mapstyles.css">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+    <title>FarmerData | Map</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="">
+        <%= typeof(msg) != "undefined" ? msg : "" %>
+    </div>
+    <div id='map'></div>
+
+
+
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <script>
+        
+        // TO MAKE THE MAP APPEAR YOU MUST
+        // ADD YOUR ACCESS TOKEN FROM
+        // https://account.mapbox.com
+
+        // let sellers = JSON.parse('<%= sellers %>')
+
+        let encoded = "<%= sellers %>"
+
+        let decoded = encoded.replace(/&#34;/g,'"'); 
+        
+        
+        let sellers = JSON.parse(decoded) 
+        console.log(sellers);
+
+        let lat = "<%= user.location.lat  %>"
+        let lng = "<%= user.location.lng %>"
+        mapboxgl.accessToken = '<%= accessToken %>';
+        const map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/tempo0730/ckin5ajx93iiu17qo5c1sipox', // stylesheet location
+            center: [lng,lat], // starting position [lng, lat]
+            zoom: 7 // starting zoom
+            });
+
+        sellers.forEach(seller => {
+            new mapboxgl.Marker()
+                .setLngLat([parseFloat(seller.longitude),parseFloat(seller.latitude)])
+                .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                    .setHTML(`<h4>${seller.name}</h4><p><a href="/homepage/${seller.username}">See products by ${seller.username}</a></p>`))
+                .addTo(map);
+        })
+
+        let element = document.createElement('div');
+        element.className='userMarker';
+
+        new mapboxgl.Marker(element)
+            .setLngLat([parseFloat(lng), parseFloat(lat)])
+            .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                .setHTML(`<h4>Your Location</h4>`))
+            .addTo(map)
+
+    </script>
+</body>
+</html>

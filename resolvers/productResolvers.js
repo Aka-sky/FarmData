@@ -68,7 +68,6 @@ module.exports.getProductById = async(product_id) => {
         } else {
             return 0;
         }
-
     } catch (error) {
         // console.log(error.message)
         return undefined;
@@ -76,6 +75,25 @@ module.exports.getProductById = async(product_id) => {
         await session.close();
     }
 }
+
+module.exports.getProductByFarmer = async(username) => {
+    const session = driver.session();
+
+    const query = `MATCH (product:Product)-[:ADDED]-(farmer: Farmer{username: $username}) RETURN ID(product) AS product_id, product.name AS name, product.category AS category, product.price AS price, product.productImageURL AS productImageURL`;
+
+    try {
+        const result = await session.run(query,{
+            username
+        });
+        const products = [];
+        result.records.forEach(record => products.push(record.toObject()));
+        return products;
+    } catch (error) {
+        return undefined;
+    } finally {
+        await session.close();
+    }
+} 
 
 module.exports.getSeller = async(product_id) => {
     const session = driver.session();
@@ -90,7 +108,6 @@ module.exports.getSeller = async(product_id) => {
         } else {
             return 0;
         }
-
     } catch (error) {
         return undefined;
     } finally {

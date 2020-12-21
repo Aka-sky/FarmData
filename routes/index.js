@@ -4,6 +4,7 @@ const router = express.Router();
 router.use('/user', require('./user'));
 router.use("/homepage", require('./homepage'))
 router.use("/product", require('./product'))
+router.use("/map", require('./map'))
 // router.use('/farmer', require('./farmer'));
 
 router.get("/", (req,res) => {
